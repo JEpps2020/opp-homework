@@ -13,18 +13,42 @@ const render = require("./lib/htmlRenderer");
 const teamArray = [];
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+
+async function init () {
+    try {
+        const {name, id, email, officeNumber, member} = await promptManager();
+        const managerMember = new Manager (name, id, email, officeNumber);
+        teamArray.push(managerMember);
+
+        if (member === "Engineer"){
+        const {name, id, email, github} = await promptEngineer();
+        const engineerMember = new Engineer (name, id, email, github);
+        teamArray.push(engineerMember);
+        }
+
+        else if (member === "Intern"){
+        const {name, id, email, school} = await promptIntern();
+        const internMember = new Intern (name, id, email, school);
+        teamArray.push(internMember)
+        }
+
+        // else {
+
+        // } 
+        
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+}
+
 function promptManager() {
     return inquirer.prompt([
       {
         type: "input",
         name: "name",
         message: "What is your Manager's name?"
-      },
-
-      {
-        type: "input",
-        name: "role",
-        message: "What is yur role?"
       },
 
       {
@@ -50,10 +74,11 @@ function promptManager() {
         message: "Which type of team member would you like to add?",
         name: "member",
         choices: ["Engineer","Intern","I don't want to add any more members."]
-      },
+      }
     
     ]);
-  }
+ 
+}
 
   function promptEngineer() {
     return inquirer.prompt([
@@ -61,12 +86,6 @@ function promptManager() {
         type: "input",
         name: "name",
         message: "What is your Engineer's name?"
-      },
-
-      {
-        type: "input",
-        name: "role",
-        message: "What is yur role?"
       },
 
       {
@@ -94,15 +113,57 @@ function promptManager() {
         choices: ["Engineer","Intern","I don't want to add any more members."]
       },
     
-    ])
-//     .then(answers=>{
-//         const engineermemeber= new Engineer(answers.name, answers.id, answers.email,answers.github);
-//         teamArray.push(engineermemeber)
-//         if(answers.member=="Engineer"){
-//             promptEngineer();
-//         }
-//     });
-//   }
+    ]);
+
+}
+
+function promptIntern() {
+    return inquirer.prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "What is your Intern's name?"
+      },
+
+      {
+        type: "input",
+        name: "email",
+        message: "What is your email?"
+      },
+
+      {
+        type: "input",
+        name: "id",
+        message: "What your id?"
+      },
+
+      {
+        type: "input",
+        name: "school",
+        message: "What school did you attend?"
+      },
+
+      {
+        type: "list",
+        message: "Which type of team member would you like to add?",
+        name: "member",
+        choices: ["Engineer","Intern","I don't want to add any more members."]
+      },
+    
+    ]);
+
+}
+
+    // .then(answers=>{
+    //     const managerMember = new Manager (answers.name, answers.id, answer.officeNumber)
+    //     teamArray.push(managerMember)
+    //     const engineermemeber= new Engineer(answers.name, answers.id, answers.email,answers.github);
+    //     teamArray.push(engineermemeber)
+    //     if(answers.member=="Engineer"){
+    //         promptEngineer();
+    //     }
+    // });
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
@@ -123,4 +184,4 @@ function promptManager() {
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
-promptEngineer()
+init();
