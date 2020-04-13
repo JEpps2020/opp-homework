@@ -24,6 +24,7 @@ const render = employees => {
 };
 
 const renderManager = manager => {
+  console.log("adding manager")
   let template = fs.readFileSync(path.resolve(templatesDir, "manager.html"), "utf8");
   template = replacePlaceholders(template, "name", manager.getName());
   template = replacePlaceholders(template, "role", manager.getRole());
@@ -54,11 +55,13 @@ const renderIntern = intern => {
 };
 
 const renderMain = html => {
+  console.log("starting writing to html")
   const template = fs.readFileSync(path.resolve(templatesDir, "main.html"), "utf8");
   return replacePlaceholders(template, "team", html);
 };
 
 const replacePlaceholders = (template, placeholder, value) => {
+  console.log("replacing to manager")
   const pattern = new RegExp("{{ " + placeholder + " }}", "gm");
   return template.replace(pattern, value);
 };
