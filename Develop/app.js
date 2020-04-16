@@ -78,7 +78,7 @@ function promptManager() {
       // }
     
     ]).then(answers => {
-      const managerMember = new Manager(answers.name, answers.id, answers.officeNumber, answers.email)
+      const managerMember = new Manager(answers.name, answers.id, answers.email, answers.officeNumber)
      teamArray.push(managerMember)
      console.log('My new person', managerMember)
 
@@ -166,7 +166,7 @@ function changeMembers() {
       // },
     
     ]).then(answers => {
-      const engineerMember = new Engineer(answers.name, answers.id, answers.github, answers.email)
+      const engineerMember = new Engineer(answers.name, answers.id, answers.email, answers.github)
      teamArray.push(engineerMember)
      console.log('My new person ENGINEER', engineerMember)
 
